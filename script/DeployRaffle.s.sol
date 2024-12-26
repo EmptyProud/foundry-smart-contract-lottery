@@ -38,8 +38,8 @@ contract DeployRaffle is Script, HelperConfig {
         vm.stopBroadcast();
 
         // Add Consumer
-        // We need to deploy our raffle contract then only add it as a consumer to the subscription
-        // We don't need to broadcast at here as we already have it in our addConsume() function
+        // Deploy raffle contract then only add it as a consumer to the subscription
+        // Exclude it out of broadcast section at it's included in the broadcast section of addConsumer() funciton
         AddConsumer addConsumer = new AddConsumer();
         addConsumer.addConsumer(address(deployRaffle), config.vrfCoordinator, config.subscriptionId, config.account);
 
