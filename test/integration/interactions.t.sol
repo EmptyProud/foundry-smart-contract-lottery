@@ -52,7 +52,7 @@ contract interactions is Test, CodeConstant {
     // #                       CREATE SUBSCRIPTION
     // # ------------------------------------------------------------------
 
-    function testCreatingSubscriptionUsingConfig() public skipFork{
+    function testCreatingSubscriptionUsingConfig() public skipFork {
         // Arrange / Act
         uint256 subIdBefore = helperConfig.getConfig().subscriptionId;
         console2.log("Subscription Id before: ", subIdBefore);
@@ -62,7 +62,7 @@ contract interactions is Test, CodeConstant {
 
         // Assert
         assert(subIdBefore == 0);
-        assert(subIdAfter != 0); 
+        assert(subIdAfter != 0);
     }
 
     function testCreatingSubscriptionUsingRun() public {
@@ -81,9 +81,9 @@ contract interactions is Test, CodeConstant {
         _;
     }
 
-    function testFundingSubscriptionUsingConfig() public skipFork{
+    function testFundingSubscriptionUsingConfig() public skipFork {
         // Arrange / Act
-        createSubscription.createSubscription(vrfCoordinator,account);
+        createSubscription.createSubscription(vrfCoordinator, account);
 
         // Act / Assert
         vm.expectRevert();
@@ -92,7 +92,7 @@ contract interactions is Test, CodeConstant {
         assert(subscriptionId == 0);
     }
 
-    function testFundSubscriptionUsingRun() public skipFork{
+    function testFundSubscriptionUsingRun() public skipFork {
         // Arrange / Act / Assert
         (bool success,) = address(fundSubscription).call(abi.encodeWithSignature("run()"));
         assert(!success);
@@ -108,9 +108,10 @@ contract interactions is Test, CodeConstant {
         _;
     }
 
-    function testAddConsumerUsingConfigForFork() public skipLocal{
+    function testAddConsumerUsingConfigForFork() public skipLocal {
         // Arrange / Act
-        (bool success,) = address(addConsumer).call(abi.encodeWithSignature("addConsumerUsingConfig(address)", address(raffle)));
+        (bool success,) =
+            address(addConsumer).call(abi.encodeWithSignature("addConsumerUsingConfig(address)", address(raffle)));
 
         // Assert
         assert(success);
@@ -118,7 +119,8 @@ contract interactions is Test, CodeConstant {
 
     function testAddConsumerUsingConfigForLocal() public {
         // Arrange / Act
-        (bool success,) = address(addConsumer).call(abi.encodeWithSignature("addConsumerUsingConfig(address)", address(raffle)));
+        (bool success,) =
+            address(addConsumer).call(abi.encodeWithSignature("addConsumerUsingConfig(address)", address(raffle)));
 
         // Assert
         assert(!success);

@@ -141,7 +141,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         s_players.push(payable(msg.sender)); // remember we need the payable keyword in order to have an address receive ETH
 
         emit RaffleEntered(msg.sender); // When somebody calls this function, we will emit an event
-        // If u dont understand why we need this event, just know as rule of thumb, anytime u update storage, u should emit an event
+            // If u dont understand why we need this event, just know as rule of thumb, anytime u update storage, u should emit an event
     }
 
     // Split the pickWinner() function into checkUpkeep() and performUpkeep()
@@ -225,7 +225,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         // Refactor
         uint256 requestId = s_vrfCoordinator.requestRandomWords(request);
         emit RequestedRaffleWinner(requestId); // But it is redundant as we r emitting n the chainlink vrf coordinator is also emitting it
-        // But just for making some of our tests a little bit easier, n also make learning easier, we r adding this emit event
+            // But just for making some of our tests a little bit easier, n also make learning easier, we r adding this emit event
     }
 
     // We need something to pick the winner
@@ -293,7 +293,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     // }
 
     // 2. Use random number to pick a winner
-    function fulfillRandomWords(uint256/*requestId*/, uint256[] calldata randomWords) internal override {
+    function fulfillRandomWords(uint256, /*requestId*/ uint256[] calldata randomWords) internal override {
         /* Checks */
         // Conditionals if have
 

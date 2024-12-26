@@ -144,7 +144,7 @@ contract RaffleTest is Test, CodeConstant {
         // Arrange
         vm.prank(USER);
         raffle.enterRaffle{value: entranceFee}();
-        vm.warp(block.timestamp + interval - 1); 
+        vm.warp(block.timestamp + interval - 1);
 
         // Act
         (bool upkeepNeeded,) = raffle.checkUpkeep("");
@@ -152,7 +152,7 @@ contract RaffleTest is Test, CodeConstant {
         // Assert
         assert(!upkeepNeeded);
     }
-    
+
     function testCheckUpkeepReturnsTrueWhenParametersAreGood() public {
         // Arrange
         vm.prank(USER);
@@ -195,14 +195,14 @@ contract RaffleTest is Test, CodeConstant {
     }
 
     function testPerformUpkeepRevertsIfCheckUpkeepIsFalse() public {
-        // The way we test this is going to be new 
+        // The way we test this is going to be new
         // As this is the first time that we r testing reverting a custom error with parameters
 
         // Arrange
         // We r setting these as it will be the parameters that we need to pass to our expected error
         uint256 currentBalance = 0;
         uint256 numPlayers = 0;
-        Raffle.RaffleState rState = raffle.getRaffleState(); 
+        Raffle.RaffleState rState = raffle.getRaffleState();
 
         vm.prank(USER);
         raffle.enterRaffle{value: entranceFee}();
@@ -239,7 +239,7 @@ contract RaffleTest is Test, CodeConstant {
         raffle.performUpkeep("");
         Vm.Log[] memory entries = vm.getRecordedLogs();
         // Calling these recordLogs n performUpkeep
-        // Whatever events or logs r emitted by this performUpkeep() function, 
+        // Whatever events or logs r emitted by this performUpkeep() function,
         // recordLogs will keep track of those n stick them into an array
         // We can walk through this array n grab the different value in it
         bytes32 requestId = entries[1].topics[1]; // requestId is bytes32 bcs verything in these logs is going to be stored as a bytes32
@@ -248,7 +248,7 @@ contract RaffleTest is Test, CodeConstant {
 
         // Assert
         Raffle.RaffleState raffleState = raffle.getRaffleState();
-        assert(uint256(requestId) > 0);// We typecast bytes32 to uint256 for requestId
+        assert(uint256(requestId) > 0); // We typecast bytes32 to uint256 for requestId
         // We just asserting to just make sure there was a requestId that was not blank
         assert(uint256(raffleState) == 1);
         // We make sure we have a requestId n make sure we get this requestId when the raffle state is actually converted
@@ -263,10 +263,14 @@ contract RaffleTest is Test, CodeConstant {
         }
         _;
     }
-    
-    function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(uint256 randomRequestId) public raffleEntered skipFork {
+
+    function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(uint256 randomRequestId)
+        public
+        raffleEntered
+        skipFork
+    {
         // How can we test fulfillRandomWords() can only be called after performUpkeep()?
-        // We can rely on our vrf coordinator mock or just our vrfCoordinator 
+        // We can rely on our vrf coordinator mock or just our vrfCoordinator
         // In the contract of the vrfCoordinator, the fulfillRandomWords() function has a if statement that checks if the requestId is 0
         // or it will return an invalidRequest error
 
@@ -285,9 +289,9 @@ contract RaffleTest is Test, CodeConstant {
         // Arrange
         uint256 additionalEntrants = 3; // 4 players in total entering the raffle
         uint256 startingIndex = 1;
-        address expectedWinner = address(1); 
+        address expectedWinner = address(1);
 
-        for(uint256 i = startingIndex; i < startingIndex + additionalEntrants; i++) {
+        for (uint256 i = startingIndex; i < startingIndex + additionalEntrants; i++) {
             address newPlayer = address(uint160(i)); // This is kind of cheaty way to convert any number into an address
             hoax(newPlayer, 10 ether); // It sets up a prank and gives them some ether
             raffle.enterRaffle{value: entranceFee}();
@@ -324,7 +328,7 @@ contract RaffleTest is Test, CodeConstant {
         // uint256 additionalEntrants = 3; // 4 players in total entering the raffle
         // uint256 startingIndex = 1;
         TestRevertReceiver userThatWillRevertWhenReceiveEther = new TestRevertReceiver();
-        
+
         // for(uint256 i = startingIndex; i < startingIndex + additionalEntrants; i++) {
         //     address newPlayer = address(uint160(i));
         //     hoax(newPlayer, 0.01 ether); // We dont give them a starting balance

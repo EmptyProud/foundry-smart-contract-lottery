@@ -23,12 +23,7 @@ contract DeployRaffle is Script, HelperConfig {
 
             // Fund Subscription
             FundSubscription fundSubscription = new FundSubscription();
-            fundSubscription.fundSubscription(
-                config.vrfCoordinator,
-                config.subscriptionId,
-                config.link,
-                config.account
-            );
+            fundSubscription.fundSubscription(config.vrfCoordinator, config.subscriptionId, config.link, config.account);
         }
 
         vm.startBroadcast(config.account);

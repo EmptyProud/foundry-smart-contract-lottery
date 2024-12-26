@@ -45,6 +45,7 @@ contract CreateSubscription is Script {
 
 contract FundSubscription is Script, CodeConstant {
     uint256 public constant FUND_AMOUNT = 300 ether; // 3 LINK, bcs LINK kind of runs with this 18 decimal places thing
+
     function fundSubscriptionUsingConfig() public {
         // We need vrfCoordinatorV2, our subscriptionId, LINK token
         // We need LINK token as LINK token is the token that we r actually making the transaction call to
@@ -57,14 +58,16 @@ contract FundSubscription is Script, CodeConstant {
         fundSubscription(vrfCoordinator, subscriptionId, linkToken, account);
     }
 
-    function fundSubscription(address vrfCoordinator, uint256 subscriptionId, address linkToken, address account) public {
+    function fundSubscription(address vrfCoordinator, uint256 subscriptionId, address linkToken, address account)
+        public
+    {
         console2.log("Funding subscription: ", subscriptionId);
         console2.log("Using vrfCoordinator: ", vrfCoordinator);
         console2.log("On chainId: ", block.chainid);
 
         if (block.chainid == LOCAL_CHAIN_ID) {
             vm.startBroadcast();
-            VRFCoordinatorV2_5Mock(vrfCoordinator).fundSubscription(subscriptionId,FUND_AMOUNT);
+            VRFCoordinatorV2_5Mock(vrfCoordinator).fundSubscription(subscriptionId, FUND_AMOUNT);
             vm.stopBroadcast();
         } else {
             vm.startBroadcast(account);
@@ -93,8 +96,8 @@ contract AddConsumer is Script {
         console2.log("On chainId: ", block.chainid);
 
         vm.startBroadcast(account);
-        VRFCoordinatorV2_5Mock(vrfCoordinator).addConsumer(subId, contractToAddToVrf); 
-        // addConsumer() is a function that can used by VRFCoordinatorV2_5Mock contract 
+        VRFCoordinatorV2_5Mock(vrfCoordinator).addConsumer(subId, contractToAddToVrf);
+        // addConsumer() is a function that can used by VRFCoordinatorV2_5Mock contract
         // as it inherited a contract called, SubscriptionAPI which has this function
         vm.stopBroadcast();
     }
