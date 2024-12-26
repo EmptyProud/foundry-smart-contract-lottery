@@ -12,7 +12,6 @@ import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/V
  * @notice This contract is for creating a sample raffle
  * @dev Implements Chainlink VRFv2.5
  */
-
 contract Raffle is VRFConsumerBaseV2Plus {
     /* Errors */
     // In this way, users who r reading n get this error will know that where the revert came from
@@ -107,7 +106,6 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     function performUpkeep(bytes calldata /* performData */ ) external {
-        
         (bool upkeepNeeded,) = checkUpkeep("");
 
         // We need to check if upkeep is needed
@@ -128,7 +126,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
         uint256 requestId = s_vrfCoordinator.requestRandomWords(request);
         emit RequestedRaffleWinner(requestId); // It is redundant as we r emitting n the chainlink vrf coordinator is also emitting it
-        // But just for making some of our tests a little bit easier, we add emit it again
+            // But just for making some of our tests a little bit easier, we add emit it again
     }
 
     // We need something to pick the winner
@@ -145,7 +143,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         uint256 indexOfWinner = randomWords[0] % s_players.length;
         // randomWords[0] as We only request one random number
         address payable recentWinner = s_players[indexOfWinner];
-        
+
         // Declare a storage variable to keep track of the most recent winner
         s_recentWinner = recentWinner;
         // Flip the state back to OPEN

@@ -83,11 +83,11 @@ contract HelperConfig is Script, CodeConstant {
             interval: 30,
             vrfCoordinator: address(vrfCoordinatorMock),
             gasLane: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
-            subscriptionId: 0, 
+            subscriptionId: 0,
             callbackGasLimit: 500000,
             link: address(linkToken),
             // This is the foundry's default account
-            account: 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38 
+            account: 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38
         });
         return localNetworkConfig;
     }

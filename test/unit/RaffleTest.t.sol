@@ -91,9 +91,9 @@ contract RaffleTest is Test, CodeConstant {
     function testDontAllowPlayersToEnterWhileRaffleIsCalculating() public {
         // Arrange
         vm.prank(USER);
-        raffle.enterRaffle{value: entranceFee}(); 
+        raffle.enterRaffle{value: entranceFee}();
         vm.warp(block.timestamp + interval + 1);
-        vm.roll(block.number + 1); 
+        vm.roll(block.number + 1);
         raffle.performUpkeep("");
 
         // Act / Assert
@@ -209,7 +209,7 @@ contract RaffleTest is Test, CodeConstant {
         // Assert
         Raffle.RaffleState raffleState = raffle.getRaffleState();
         assert(uint256(requestId) > 0); // Just asserting to just make sure there was a requestId that was not blank
-        
+
         assert(uint256(raffleState) == 1);
         // We make sure we have a requestId n also get it when the raffle state is actually converted
     }
