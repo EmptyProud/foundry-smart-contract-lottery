@@ -12,3 +12,13 @@ docs/
 
 # Dotenv file
 .env
+
+broadcast/
+
+Remark.md
+
+SecurityRemark.md
+
+json.json
+
+.gas-snapshot
