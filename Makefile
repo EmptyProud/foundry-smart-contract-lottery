@@ -6,6 +6,8 @@ build :; forge build
 
 test :; forge test
 
+fmt :; forge fmt
+
 install :; forge install cyfrin/foundry-devops@0.2.2 --no-commit && forge install smartcontractkit/chainlink-brownie-contracts@1.1.1 --no-commit && forge install foundry-rs/forge-std@v1.8.2 --no-commit
 
 deploy-sepolia :
@@ -16,4 +18,8 @@ anvil :; anvil -m 'test test test test test test test test test test test junk' 
 deploy-anvil :
 	@forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(ANVIL_RPC_URL) --private-key $(ANVIL_PRIVATE_KEY) --sender $(ANVIL_SENDER_ADDRESS) --broadcast -vvvv
 
+coverage :; forge coverage
+
 coverage-report :; forge coverage --report debug > coverage.txt
+
+snapshot :; forge snapshot
